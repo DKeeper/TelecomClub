@@ -1,0 +1,152 @@
+html, body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.42857143;
+}
+form, p{
+    margin: 0;
+}
+h1,h2,h3{
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    display: inline-block;
+}
+a{
+    display: block;
+}
+a.btn{
+    width: inherit;
+}
+.container {
+	width: 1170px;
+	margin: auto;
+}
+.panel-wrapper {
+	margin: auto;
+	width: 30%;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+.panel-heading {
+	color: #333;
+	background-color: #f5f5f5;
+	padding: 10px 15px;
+	border-bottom: 1px solid #ddd;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.panel-title {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 16px;
+	color: inherit;
+}
+.panel-body {
+	padding: 15px;
+}
+.form-group {
+	margin-bottom: 10px;
+}
+.unpublished {
+  border: 2px solid red;
+}
+.reply {
+  margin-left: 100px;
+}
+.single-post{
+  min-height: 150px;
+  background-color: #dedede;
+  border-radius: 5px;
+}
+.row{
+    line-height: 2;
+    padding: 0;
+    margin-bottom: 5px;
+}
+.row:after{
+    clear: both;
+}
+.col-10{
+    width: 10%;
+    float: left;
+}
+.user-block {
+  min-height: 150px;
+  border-right: 1px solid #cdcdcd;
+  padding: 0 5px;
+  text-align: center;
+}
+.message-block {
+  margin-left: 11%;
+  text-align: justify;
+  padding: 0 10px;
+}
+.form-control {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+.form-control:focus {
+	border-color: #aaa;
+	outline: 0;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(200, 200, 200, .6);
+}
+.btn{
+	text-align: center;
+	cursor: pointer;
+	padding: 10px 16px;
+	font-size: 16px;
+	line-height: 1.3333333;
+	border-radius: 6px;
+	border: 1px solid transparent;
+	display: inline-block;
+}
+.btn-block {
+	display: block;
+	width: 100%;
+}
+.btn-primary {
+	color: #333;
+	border-color: #aaa;
+	background-color: #ddd;
+}
+.btn-primary:hover{
+	border-color: #888;
+	background-color: #bbb;
+}
+.btn-primary:focus{
+	border-color: #555;
+	background-color: #bbb;
+    outline: none;
+}
+.help-block-error{
+    color: #ff0000;
+}
+.has-error{
+    border-color: red;
+}
+.summary-error{
+    background-color: #ff0000;
+    text-align: center;
+    padding: 5px 0;
+    margin-bottom: 15px;
+    border-radius: 3px;
+}
+.notification-success {
+  border: 2px solid green;
+  border-radius: 5px;
+  padding: 0 10px;
+}
