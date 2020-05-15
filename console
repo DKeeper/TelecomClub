@@ -1,0 +1,36 @@
+#!/usr/bin/php
+<?php
+if ('cli' !== PHP_SAPI) {
+    echo 'Command should run in CLI mode' . PHP_EOL;
+    exit();
+}
+
+require_once(__DIR__ . '/helpers/autoload.php');
+require_once(__DIR__ . '/helpers/helpers.php');
+require_once(__DIR__ . '/helpers/console_helper.php');
+$config = require_once(__DIR__ . '/config/config.php');
+
+define('TEST_BASE_PATH', $config['basePath']);
+
+$db = new \components\DBwrapper();
+$db->init($config['db']);
+
+$commandClass = '\\model\\' . ucfirst(getCommand());
+$params = getParameters();
+$params['db'] = $db;
+
+try {
+    class_exists($commandClass);
+    /** @var \model\ConsoleCommand $command */
+    $command = new $commandClass($params);
+
+    if (false === $command instanceof \model\ConsoleCommand) {
+        echo getCommand() . ' should implement ConsoleCommand interface' . PHP_EOL;
+        exit();
+    }
+} catch (\RuntimeException $e) {
+    echo getCommand() . ' couldn\'t found' . PHP_EOL;
+    exit();
+}
+
+$command->run();
