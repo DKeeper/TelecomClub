@@ -24,7 +24,7 @@ CREATE TABLE `news` (
 	`title` VARCHAR(255) NOT NULL,
 	`message` TEXT NOT NULL,
 	`image` TEXT NULL,
-	`created_at` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00',
+	`created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`),
 	INDEX `category` (`category`)
 )

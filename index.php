@@ -1,4 +1,8 @@
 <?php
+if ('cli' === PHP_SAPI) {
+    echo 'Command should run in WEB mode' . PHP_EOL;
+    exit();
+}
 
 session_start();
 

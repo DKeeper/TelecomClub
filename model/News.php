@@ -7,6 +7,11 @@ namespace model;
  */
 class News extends Model
 {
+    protected const CATEGORY_1 = 0;
+    protected const CATEGORY_2 = 1;
+    protected const CATEGORY_3 = 2;
+    protected const CATEGORY_4 = 3;
+
     protected $tableName = 'news';
 
     protected $fields = ['id', 'category', 'title', 'message', 'image', 'created_at'];
@@ -46,5 +51,18 @@ class News extends Model
     public function getNews(array $conditions = [], array $sort = []): array
     {
         return $this->findAll($conditions);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getAvailableCategory(): array
+    {
+        return [
+            self::CATEGORY_1,
+            self::CATEGORY_2,
+            self::CATEGORY_3,
+            self::CATEGORY_4,
+        ];
     }
 }

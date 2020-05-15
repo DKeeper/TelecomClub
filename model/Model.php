@@ -135,6 +135,18 @@ class Model
     }
 
     /**
+     * @param array $attr
+     *
+     * @return Model
+     */
+    public function setAttributes(array $attr): self
+    {
+        $this->attributes = $attr;
+
+        return $this;
+    }
+
+    /**
      * @param array $conditions
      * @param array $params
      *
