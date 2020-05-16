@@ -45,13 +45,13 @@ function generateRandomString($length = 10): string
 }
 
 /**
- * @return string
+ * @param string $fileName
  *
- * @throws Exception
+ * @return string
  */
-function generateRandomUploadPath(): string
+function generateRandomUploadPath(string $fileName): string
 {
     return TEST_BASE_PATH
         . DIRECTORY_SEPARATOR . 'upload'
-        . DIRECTORY_SEPARATOR . substr(md5(uuid4()), 0, 2);
+        . DIRECTORY_SEPARATOR . substr(md5($fileName), 0, 2);
 }

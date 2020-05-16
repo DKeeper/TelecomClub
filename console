@@ -13,23 +13,26 @@ $config = require_once(__DIR__ . '/config/config.php');
 define('TEST_BASE_PATH', $config['basePath']);
 
 $db = new \components\DBwrapper();
+$config['db']['options'] = [
+    \PDO::MYSQL_ATTR_LOCAL_INFILE => true,
+];
 $db->init($config['db']);
 
-$commandClass = '\\model\\' . ucfirst(getCommand());
+$commandClass = '\\command\\' . ucfirst(getCommand());
 $params = getParameters();
 $params['db'] = $db;
 
 try {
     class_exists($commandClass);
-    /** @var \model\ConsoleCommand $command */
+    /** @var \command\ConsoleCommand $command */
     $command = new $commandClass($params);
 
-    if (false === $command instanceof \model\ConsoleCommand) {
+    if (false === $command instanceof \command\ConsoleCommand) {
         echo getCommand() . ' should implement ConsoleCommand interface' . PHP_EOL;
         exit();
     }
 } catch (\RuntimeException $e) {
-    echo getCommand() . ' couldn\'t found' . PHP_EOL;
+    echo getCommand() . ' :: Exception :: ' . $e->getMessage() . PHP_EOL;
     exit();
 }
 

@@ -25,7 +25,12 @@ class DBwrapper
     public function init(array $config)
     {
         try {
-            $this->db = new \PDO($config['dsn'], $config['user'], $config['password']);
+            $this->db = new \PDO(
+                $config['dsn'],
+                $config['user'],
+                $config['password'],
+                $config['options'] ?? null
+            );
         } catch (\PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";
             die();
