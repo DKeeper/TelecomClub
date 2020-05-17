@@ -44,11 +44,10 @@ class News extends Model
 
     /**
      * @param array $conditions
-     * @param array $sort
      *
      * @return array
      */
-    public function getNews(array $conditions = [], array $sort = []): array
+    public function getNews(array $conditions = []): array
     {
         return $this->findAll($conditions);
     }

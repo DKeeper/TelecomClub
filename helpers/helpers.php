@@ -130,11 +130,24 @@ function getViewPath()
 
 function renderNews($model, $data = [], $user = null)
 {
-    echo viewPhpFile(getViewPath() . 'news.php', [
+    echo viewPhpFile(getViewPath() . 'news_list.php', [
         'user' => $user,
-        'news' => $data,
+        'dataProvider' => $data,
         'model' => $model,
     ]);
+}
+
+/**
+ * @param string $image
+ *
+ * @return string
+ */
+function getImageLink(string $image): string
+{
+    return DIRECTORY_SEPARATOR . 'upload'
+        . DIRECTORY_SEPARATOR . substr(md5($image), 0, 2)
+        . DIRECTORY_SEPARATOR . $image
+        ;
 }
 
 function uuid4() {

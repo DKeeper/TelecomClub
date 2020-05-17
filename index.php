@@ -77,6 +77,18 @@ switch ($q) {
             }
         }
 
-        renderNews($postModel, $postModel->getNews(), $user);
+        /**
+         * @todo Add filter form
+         */
+        $conditions = [
+            'sort' => [
+                'category ASC',
+                'created_at ASC',
+            ],
+            'limit' => 100,
+            'offset' => 1000,
+        ];
+
+        renderNews($postModel, $postModel->getNews($conditions), $user);
         break;
 }

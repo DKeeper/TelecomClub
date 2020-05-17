@@ -176,9 +176,29 @@ class Model
     {
         $sql = "SELECT * FROM " . $this->getTableName();
 
-        if (!empty($conditions) && is_array($conditions)) {
-            $where = implode(' AND ', $conditions);
-            $sql .= " WHERE " . $where;
+        $where = $conditions['where'] ?? [];
+        $sort = $conditions['sort'] ?? [];
+        $limit = $conditions['limit'] ?? null;
+        $offset = $conditions['offset'] ?? null;
+
+        if (is_array($where) && false === empty($where)) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        } elseif (false === empty($where)) {
+            $sql .= ' WHERE ' . $where;
+        }
+
+        if (is_array($sort) && false === empty($sort)) {
+            $sql .= ' ORDER BY ' . implode(', ', $sort);
+        } elseif (false === empty($sort)) {
+            $sql .= ' ORDER BY ' . $sort;
+        }
+
+        if (null !== $limit) {
+            $sql .= ' LIMIT ' . $limit;
+        }
+
+        if (null !== $offset) {
+            $sql .= ' OFFSET ' . $offset;
         }
 
         $_q = $this->db->findAll($sql, $params);

@@ -74,6 +74,18 @@ a.btn{
     width: 10%;
     float: left;
 }
+.col-20{
+    width: 20%;
+    float: left;
+}
+.col-30{
+    width: 30%;
+    float: left;
+}
+.col-400px{
+    width: 400px;
+    float: left;
+}
 .user-block {
   min-height: 150px;
   border-right: 1px solid #cdcdcd;
@@ -81,9 +93,14 @@ a.btn{
   text-align: center;
 }
 .message-block {
-  margin-left: 11%;
   text-align: justify;
   padding: 0 10px;
+}
+.margin-left-11 {
+	margin-left: 11%;
+}
+.margin-left-400px {
+	margin-left: 400px;
 }
 .form-control {
 	display: block;
