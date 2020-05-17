@@ -10,7 +10,7 @@
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?= 'News' ?></title>
-        <link href="/assets/css.css" rel="stylesheet">
+        <link href="<?= TEST_BASE_URL ?>assets/css.css" rel="stylesheet">
     </head>
     <body>
         <div class="container">

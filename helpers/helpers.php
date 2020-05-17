@@ -144,7 +144,7 @@ function renderNews($model, $data = [], $user = null)
  */
 function getImageLink(string $image): string
 {
-    return DIRECTORY_SEPARATOR . 'upload'
+    return TEST_BASE_URL . 'upload'
         . DIRECTORY_SEPARATOR . substr(md5($image), 0, 2)
         . DIRECTORY_SEPARATOR . $image
         ;
