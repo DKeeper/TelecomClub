@@ -27,6 +27,7 @@ CREATE TABLE `news` (
 	`created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`),
 	INDEX `category` (`category`)
+	INDEX `created_at` (`created_at`)
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
