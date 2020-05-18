@@ -105,7 +105,7 @@ class Generator implements ConsoleCommand
         $this->limit = (int) $this->limit;
 
         $model = new News($this->db);
-        $this->category = $model->getAvailableCategory();
+        $this->category = News::getAvailableCategory();
         $this->tableName = $model->getTableName();
 
         $this->initFileHandlers();

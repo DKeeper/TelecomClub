@@ -72,6 +72,24 @@ switch ($q) {
 
         redirectMain();
         break;
+    case 'news':
+        if (null === $id = get('id')) {
+            redirectMain();
+        }
+
+        $model = new \model\News($db);
+
+        if (false === $model->findByPk($id)) {
+            echo 'Model couldn\'t found by ID ' . $id;
+            exit();
+        }
+
+        echo viewPhpFile(getViewPath() . 'news_single.php', [
+            'user' => $user,
+            'model' => $model,
+        ]);
+
+        break;
     default:
         $postModel = new \model\News($db);
         $postData = post("filters");
@@ -93,24 +111,14 @@ switch ($q) {
                 50 => 50,
                 100 => 100,
             ],
-            'page' => [
-                1 => 1,
-                5 => 5,
-                10 => 10,
-                25 => 25,
-                50 => 50,
-                75 => 75,
-                100 => 100,
-            ],
         ];
 
         if (false === isset($postData)) {
             $l = [10, 25, 50, 100];
-            $p = [1, 5, 10, 25, 50, 75, 100];
             $postData = [
                 'sort' => random_int(0, 7),
                 'limit' => $l[array_rand($l)],
-                'page' => $p[array_rand($p)],
+                'page' => random_int(1, 100),
             ];
         } else {
             $postData = array_map('intval', $postData);

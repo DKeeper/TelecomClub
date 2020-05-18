@@ -167,3 +167,9 @@ a.btn{
   	border-radius: 5px;
   	padding: 0 10px;
 }
+.text-center {
+	text-align: center;
+}
+.text-justify {
+	text-align: justify;
+}

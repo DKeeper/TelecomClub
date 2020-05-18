@@ -65,13 +65,26 @@ class News extends Model
     /**
      * @return int[]
      */
-    public function getAvailableCategory(): array
+    public static function getAvailableCategory(): array
     {
         return [
             self::CATEGORY_1,
             self::CATEGORY_2,
             self::CATEGORY_3,
             self::CATEGORY_4,
+        ];
+    }
+
+    /**
+     * @return int[]
+     */
+    public static function getCategoryLabels(): array
+    {
+        return [
+            self::CATEGORY_1 => 'Category 1',
+            self::CATEGORY_2 => 'Category 2',
+            self::CATEGORY_3 => 'Category 3',
+            self::CATEGORY_4 => 'Category 4',
         ];
     }
 }
