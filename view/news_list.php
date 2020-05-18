@@ -1,7 +1,7 @@
 <?php
 
 /** @var $user \model\User */
-/** @var $dataProvider \model\News[] */
+/** @var $dataProvider array */
 /** @var $postData array */
 /** @var $filterValues array */
 /**
@@ -26,7 +26,6 @@ function printOption($value, $selected, $text)
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?= 'News' ?></title>
-        <link href="<?= TEST_BASE_URL ?>assets/css.css" rel="stylesheet">
     </head>
     <body>
         <div class="container">
@@ -73,5 +72,6 @@ foreach ($dataProvider as $news) {
 }
 ?>
         </div>
+        <link href="<?= TEST_BASE_URL ?>assets/css.css" rel="stylesheet">
     </body>
 </html>

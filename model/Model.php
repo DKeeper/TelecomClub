@@ -169,17 +169,23 @@ class Model
     /**
      * @param array $conditions
      * @param array $params
+     * @param bool $asArray
      *
      * @return array
      */
-    public function findAll(array $conditions = [], array $params = []): array
+    public function findAll(array $conditions = [], array $params = [], bool $asArray = false): array
     {
-        $sql = "SELECT * FROM " . $this->getTableName();
-
+        $select = $conditions['select'] ?? '*';
         $where = $conditions['where'] ?? [];
         $sort = $conditions['sort'] ?? [];
         $limit = $conditions['limit'] ?? null;
         $offset = $conditions['offset'] ?? null;
+
+        if (is_array($select)) {
+            $select = implode(', ', $select);
+        }
+
+        $sql = 'SELECT ' . $select . ' FROM ' . $this->getTableName();
 
         if (is_array($where) && false === empty($where)) {
             $sql .= ' WHERE ' . implode(' AND ', $where);
@@ -204,13 +210,14 @@ class Model
         $_q = $this->db->findAll($sql, $params);
 
         if (!empty($_q)) {
-            $className = static::class;
+            if (false === $asArray) {
+                $className = static::class;
 
-            foreach ($_q as $i => $attr) {
-                /** @var $_m Model */
-                $_m = new $className($this->db);
-                $_m->attributes = $attr;
-                $_q[$i] = $_m;
+                foreach ($_q as $i => $attr) {
+                    /** @var $_m Model */
+                    $_m = new $className($this->db);
+                    $_q[$i] = $_m->setAttributes($attr);
+                }
             }
         }
 

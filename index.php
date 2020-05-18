@@ -141,6 +141,6 @@ switch ($q) {
         $conditions['limit'] = (int) $postData['limit'];
         $conditions['offset'] = ((int) $postData['page'] - 1) * (int) $postData['limit'];
 
-        renderNews($postData, $filterValues, $postModel->getNews($conditions), $user);
+        renderNews($postData, $filterValues, $postModel->getList($conditions, true), $user);
         break;
 }

@@ -1,15 +1,15 @@
 <?php
 
-/** @var $news \model\News */
+/** @var $news array */
 ?>
 
 <div class="row single-post">
     <div class="user-block col-400px">
-        <img src="<?= getImageLink($news->getAttribute('image')) ?>" /><br/>
-        <?= $news->getAttribute('created_at') ?>
+        <img src="<?= getImageLink($news['image']) ?>" /><br/>
+        <?= $news['created_at'] ?>
     </div>
     <div class="message-block margin-left-400px">
-        <?= $news->getAttribute('title') ?>
-        <?= $news->getAttribute('message') ?>
+        <?= $news['title'] ?>
+        <?= $news['message'] ?>
     </div>
 </div>
