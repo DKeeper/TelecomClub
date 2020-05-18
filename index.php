@@ -5,11 +5,6 @@ if ('cli' === PHP_SAPI) {
 }
 
 $uri = parse_url($_SERVER['REQUEST_URI'] ?? '');
-$scriptPath = ['/', 'index.php'];
-
-if (false === in_array($uri['path'], $scriptPath, true)) {
-    exit();
-}
 
 session_start();
 
@@ -25,6 +20,12 @@ $config = require_once(__DIR__ . '/config/config.php');
 
 define('TEST_BASE_URL', $config['baseUrl']);
 define('TEST_APP_URL', $config['appUrl']);
+
+$scriptPath = [TEST_BASE_URL, TEST_BASE_URL . 'index.php'];
+
+if (false === in_array($uri['path'], $scriptPath, true)) {
+    exit();
+}
 
 $db = new \components\DBwrapper();
 $db->init($config['db']);
