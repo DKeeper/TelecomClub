@@ -66,29 +66,81 @@ switch ($q) {
         break;
     default:
         $postModel = new \model\News($db);
-        $postData = post("News");
-
-        if (isset($postData)) {
-            $postModel->load($postData);
-
-            if ($postModel->validate() && $postModel->save()) {
-                $_SESSION['addPostSuccess'] = "Ваше сообщение было добавлено. После модерации оно будет доступно для просмотра.";
-                $postModel = new \model\News($db);
-            }
-        }
-
-        /**
-         * @todo Add filter form
-         */
-        $conditions = [
+        $postData = post("filters");
+        $conditions = [];
+        $filterValues = [
             'sort' => [
                 'category ASC',
+                'category DESC',
                 'created_at ASC',
+                'created_at DESC',
+                'category ASC, created_at ASC',
+                'category DESC, created_at DESC',
+                'created_at ASC, category ASC',
+                'created_at DESC, category DESC',
             ],
-            'limit' => 100,
-            'offset' => 1000,
+            'limit' => [
+                10 => 10,
+                25 => 25,
+                50 => 50,
+                100 => 100,
+            ],
+            'page' => [
+                1 => 1,
+                5 => 5,
+                10 => 10,
+                25 => 25,
+                50 => 50,
+                75 => 75,
+                100 => 100,
+            ],
         ];
 
-        renderNews($postModel, $postModel->getNews($conditions), $user);
+        if (false === isset($postData)) {
+            $l = [10, 25, 50, 100];
+            $p = [1, 5, 10, 25, 50, 75, 100];
+            $postData = [
+                'sort' => random_int(0, 7),
+                'limit' => $l[array_rand($l)],
+                'page' => $p[array_rand($p)],
+            ];
+        }
+
+        switch ((int) $postData['sort']) {
+            case 0:
+            case 1:
+                $conditions['sort'] = 'category ' . ((int) $postData['sort'] === 0 ? 'ASC' : 'DESC');
+
+                break;
+            case 2:
+            case 3:
+                $conditions['sort'] = 'created_at ' . ((int) $postData['sort'] === 2 ? 'ASC' : 'DESC');
+
+                break;
+            case 4:
+            case 5:
+                $conditions['sort'] = [];
+
+                foreach (['category', 'created_at'] as $value) {
+                    $conditions['sort'][] = $value . ' ' . ((int)$postData['sort'] === 4 ? 'ASC' : 'DESC');
+                }
+
+                break;
+            case 6:
+            case 7:
+                $conditions['sort'] = [];
+
+                foreach (['created_at', 'category'] as $value) {
+                    $conditions['sort'][] = $value . ' ' . ((int)$postData['sort'] === 6 ? 'ASC' : 'DESC');
+                }
+
+                break;
+            default:
+        }
+
+        $conditions['limit'] = (int) $postData['limit'];
+        $conditions['offset'] = ((int) $postData['page'] - 1) * (int) $postData['limit'];
+
+        renderNews($postData, $filterValues, $postModel->getNews($conditions), $user);
         break;
 }

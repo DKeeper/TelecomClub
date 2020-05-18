@@ -128,12 +128,13 @@ function getViewPath()
     return (dirname(__DIR__) . '/view/');
 }
 
-function renderNews($model, $data = [], $user = null)
+function renderNews($postData, $filterValues, $data = [], $user = null)
 {
     echo viewPhpFile(getViewPath() . 'news_list.php', [
         'user' => $user,
         'dataProvider' => $data,
-        'model' => $model,
+        'postData' => $postData,
+        'filterValues' => $filterValues,
     ]);
 }
 
