@@ -3,6 +3,7 @@
 namespace command;
 
 use components\DBwrapper;
+use components\LoremIpsum;
 use model\News;
 
 /**
@@ -52,6 +53,8 @@ class Generator implements ConsoleCommand
      */
     private $tableName;
 
+    private $fakeText = [];
+
     /**
      * Generator constructor.
      *
@@ -70,6 +73,22 @@ class Generator implements ConsoleCommand
         if (null === $this->outputFilePath) {
             throw new \RuntimeException('Path to temporary file isn\'t configured.');
         }
+
+        echo date('c') . ' :: Prepare random text.' . PHP_EOL;
+        $loremIpsum = new LoremIpsum();
+
+        for ($i = 0; $i < 100; $i++) {
+            $length = $loremIpsum->availableLengthOfParagraph()[array_rand($loremIpsum->availableLengthOfParagraph())];
+            $paragraph = random_int(1, 20);
+            $loremIpsum->setLength($length)
+                ->setNumberOfParagraph($paragraph)
+                ->setCode((bool) random_int(0, 1))
+            ;
+
+            $this->fakeText[] = $loremIpsum->getText();
+        }
+
+        echo date('c') . ' :: Done' . PHP_EOL;
     }
 
     /**
@@ -131,8 +150,9 @@ class Generator implements ConsoleCommand
         return [
             'category' => $this->category[array_rand($this->category)],
             'title' => generateRandomString(10),
-            'message' => generateRandomString(10000),
+            'message' => $this->fakeText[array_rand($this->fakeText)],
             'image' => basename($filePath),
+            'created_at' => (new \DateTime())->format('Y-m-d H:i:s'),
         ];
     }
 
