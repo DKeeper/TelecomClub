@@ -3,13 +3,13 @@
 /** @var $news array */
 ?>
 
-<div class="row single-post">
-    <div class="user-block col-400px">
+<div class="flexbox">
+    <div class="box image">
         <img src="<?= getImageLink($news['image']) ?>" /><br/>
         <?= $news['created_at'] ?>
     </div>
-    <div class="message-block margin-left-400px">
-        <?= $news['title'] ?>
+    <div class="box text">
+        <?= $news['title'] ?><br/>
         <?= $news['message'] ?>
     </div>
 </div>

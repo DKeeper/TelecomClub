@@ -72,6 +72,6 @@ foreach ($dataProvider as $news) {
 }
 ?>
         </div>
-        <link href="<?= TEST_BASE_URL ?>assets/css.css" rel="stylesheet">
+        <link href="<?= TEST_BASE_URL ?>assets/f-css.css" rel="stylesheet">
     </body>
 </html>

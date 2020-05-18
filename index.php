@@ -4,6 +4,13 @@ if ('cli' === PHP_SAPI) {
     exit();
 }
 
+$uri = parse_url($_SERVER['REQUEST_URI'] ?? '');
+$scriptPath = ['/', 'index.php'];
+
+if (false === in_array($uri['path'], $scriptPath, true)) {
+    exit();
+}
+
 session_start();
 
 /**
@@ -104,6 +111,8 @@ switch ($q) {
                 'limit' => $l[array_rand($l)],
                 'page' => $p[array_rand($p)],
             ];
+        } else {
+            $postData = array_map('intval', $postData);
         }
 
         switch ((int) $postData['sort']) {

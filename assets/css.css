@@ -52,15 +52,15 @@ a.btn{
 	margin-bottom: 10px;
 }
 .unpublished {
-  border: 2px solid red;
+  	border: 2px solid red;
 }
 .reply {
-  margin-left: 100px;
+  	margin-left: 100px;
 }
 .single-post{
-  min-height: 150px;
-  background-color: #dedede;
-  border-radius: 5px;
+  	min-height: 150px;
+  	background-color: #dedede;
+  	border-radius: 5px;
 }
 .row{
     line-height: 2;
@@ -87,14 +87,14 @@ a.btn{
     float: left;
 }
 .user-block {
-  min-height: 150px;
-  border-right: 1px solid #cdcdcd;
-  padding: 0 5px;
-  text-align: center;
+  	min-height: 150px;
+  	border-right: 1px solid #cdcdcd;
+  	padding: 0 5px;
+  	text-align: center;
 }
 .message-block {
-  text-align: justify;
-  padding: 0 10px;
+  	text-align: justify;
+  	padding: 0 10px;
 }
 .margin-left-11 {
 	margin-left: 11%;
@@ -163,7 +163,7 @@ a.btn{
     border-radius: 3px;
 }
 .notification-success {
-  border: 2px solid green;
-  border-radius: 5px;
-  padding: 0 10px;
+  	border: 2px solid green;
+  	border-radius: 5px;
+  	padding: 0 10px;
 }
