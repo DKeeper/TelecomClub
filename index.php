@@ -93,6 +93,7 @@ switch ($q) {
     default:
         $postData = post("filters");
         $conditions = [];
+        $cacheConditions = [];
         $filterValues = [
             'sort' => [
                 'category ASC',
@@ -126,37 +127,35 @@ switch ($q) {
         switch ((int) $postData['sort']) {
             case 0:
             case 1:
-                $conditions['sort'] = 'category ' . ((int) $postData['sort'] === 0 ? 'ASC' : 'DESC');
+            $cacheConditions['sort'] = 'category ' . ((int) $postData['sort'] === 0 ? 'ASC' : 'DESC');
 
                 break;
             case 2:
             case 3:
-                $conditions['sort'] = 'created_at ' . ((int) $postData['sort'] === 2 ? 'ASC' : 'DESC');
+            $cacheConditions['sort'] = 'created_at ' . ((int) $postData['sort'] === 2 ? 'ASC' : 'DESC');
 
                 break;
             case 4:
             case 5:
-                $conditions['sort'] = [];
+            $cacheConditions['sort'] = [];
 
                 foreach (['category', 'created_at'] as $value) {
-                    $conditions['sort'][] = $value . ' ' . ((int)$postData['sort'] === 4 ? 'ASC' : 'DESC');
+                    $cacheConditions['sort'][] = $value . ' ' . ((int)$postData['sort'] === 4 ? 'ASC' : 'DESC');
                 }
 
                 break;
             case 6:
             case 7:
-                $conditions['sort'] = [];
+            $cacheConditions['sort'] = [];
 
                 foreach (['created_at', 'category'] as $value) {
-                    $conditions['sort'][] = $value . ' ' . ((int)$postData['sort'] === 6 ? 'ASC' : 'DESC');
+                    $cacheConditions['sort'][] = $value . ' ' . ((int)$postData['sort'] === 6 ? 'ASC' : 'DESC');
                 }
 
                 break;
             default:
         }
 
-        $conditions['limit'] = (int) $postData['limit'];
-        $conditions['offset'] = ((int) $postData['page'] - 1) * (int) $postData['limit'];
         $conditions['select'] = [
             'id',
             'category',
@@ -166,7 +165,15 @@ switch ($q) {
             'created_at',
         ];
 
+        $cacheConditions = array_merge($cacheConditions, [
+            'limit' => (int) $postData['limit'],
+            'offset' => ((int) $postData['page'] - 1) * (int) $postData['limit'],
+        ]);
+
         $repo = new \repository\NewsRepository($db);
+        $cache = new \components\Cache($db);
+        $ids = $cache->getPkByConditions((new \model\News($db))->getTableName(), $cacheConditions);
+        $conditions['where'] = 'id IN (' . implode(',', $ids) . ')';
 
         renderNews($postData, $filterValues, $repo->findAll($conditions, [], true), $user);
         break;
