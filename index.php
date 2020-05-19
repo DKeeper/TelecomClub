@@ -171,9 +171,18 @@ switch ($q) {
         ]);
 
         $repo = new \repository\NewsRepository($db);
-        $cache = new \components\Cache($db);
-        $ids = $cache->getPkByConditions((new \model\News($db))->getTableName(), $cacheConditions);
-        $conditions['where'] = 'id IN (' . implode(',', $ids) . ')';
+
+        if (isset($config['cache'])) {
+            $class = $config['cache']['class'] ?? \components\Cache::class;
+            $host = $config['cache']['host'] ?? 'localhost';
+            $port = $config['cache']['port'] ?? 11211;
+            $cache = new $class($db, $host, $port);
+            $ids = $cache->getPkByConditions((new \model\News($db))->getTableName(), $cacheConditions);
+            $conditions['where'] = 'id IN (' . implode(',', $ids) . ')';
+            $conditions['sort'] = 'FIELD(id, ' . implode(',', $ids) . ')';
+        } else {
+            $conditions = array_merge($conditions, $cacheConditions);
+        }
 
         renderNews($postData, $filterValues, $repo->findAll($conditions, [], true), $user);
         break;

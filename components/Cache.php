@@ -23,12 +23,14 @@ class Cache
      * Cache constructor.
      *
      * @param DBwrapper $db
+     * @param string $host
+     * @param int $port
      */
-    public function __construct(DBwrapper $db)
+    public function __construct(DBwrapper $db, string $host, int $port)
     {
         $this->db = clone $db;
         $this->cache = new \Memcached();
-        $this->cache->addServer('localhost', 11211);
+        $this->cache->addServer($host, $port);
     }
 
     /**

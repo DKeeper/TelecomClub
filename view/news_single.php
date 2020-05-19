@@ -13,7 +13,8 @@
 <body>
 <div class="container">
     <div class="row">
-        <h2><?= $model->getAttribute('title')?></h2>
+        <h2><?= $model->getAttribute('title') ?></h2>
+        <span>[<?= \model\News::getCategoryLabels()[$model->getAttribute('category')] ?? 'N/a' ?>]</span>
     </div>
     <div class="row text-center">
         <img class="text-center" src="<?= getImageLink($model->getAttribute('image')) ?>">
