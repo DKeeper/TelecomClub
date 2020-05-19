@@ -43,6 +43,10 @@ class Cache
         $offset = $conditions['offset'] ?? 0;
         $limit = $conditions['limit'] ?? 0;
 
+        if (is_array($sort) && false === empty($sort)) {
+            $sort = implode(', ', $sort);
+        }
+
         return $this->getPk($table, $sort, $limit, $offset);
     }
 
