@@ -43,26 +43,6 @@ class News extends Model
     ];
 
     /**
-     * @param array $conditions
-     * @param bool $asArray
-     *
-     * @return array
-     */
-    public function getList(array $conditions = [], bool $asArray = false): array
-    {
-        $conditions['select'] = [
-            'id',
-            'category',
-            'title',
-            'LEFT(message, 250) AS message',
-            'image',
-            'created_at',
-        ];
-
-        return $this->findAll($conditions, [], $asArray);
-    }
-
-    /**
      * @return int[]
      */
     public static function getAvailableCategory(): array

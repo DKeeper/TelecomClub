@@ -43,18 +43,18 @@ switch ($q) {
             redirectMain();
         }
 
-        $user = new \model\LoginForm($db);
+        $userLogin = new \model\LoginForm($db);
         $loginData = post('LoginForm');
 
         if (isset($loginData)) {
-            $user->load($loginData);
+            $userLogin->load($loginData);
 
-            if ($user->validate()) {
-                if ($user->find(['login LIKE :login', 'password LIKE :password'],
-                    [':login' => $user->getAttribute('login'), ':password' => md5($user->getAttribute('password'))])) {
-                    $_pk = $user->getAttribute($user->getPk());
-                    $user = new \model\User($db);
-                    $user->findByPk($_pk);
+            if ($userLogin->validate()) {
+                $repo = new \repository\UserRepository($db);
+                if (null !== $user = $repo->find(
+                    ['login LIKE :login', 'password LIKE :password'],
+                    [':login' => $userLogin->getAttribute('login'), ':password' => md5($userLogin->getAttribute('password'))]
+                )) {
                     $_SESSION['user'] = $user->getAttributes();
                     redirectMain();
                 } else {
@@ -63,7 +63,7 @@ switch ($q) {
             }
         }
 
-        renderLogin($user);
+        renderLogin($userLogin);
         break;
     case 'logout':
         if (isset($user)) {
@@ -77,9 +77,9 @@ switch ($q) {
             redirectMain();
         }
 
-        $model = new \model\News($db);
+        $repo = new \repository\NewsRepository($db);
 
-        if (false === $model->findByPk($id)) {
+        if (null === $model = $repo->findByPk($id)) {
             echo 'Model couldn\'t found by ID ' . $id;
             exit();
         }
@@ -91,7 +91,6 @@ switch ($q) {
 
         break;
     default:
-        $postModel = new \model\News($db);
         $postData = post("filters");
         $conditions = [];
         $filterValues = [
@@ -158,7 +157,17 @@ switch ($q) {
 
         $conditions['limit'] = (int) $postData['limit'];
         $conditions['offset'] = ((int) $postData['page'] - 1) * (int) $postData['limit'];
+        $conditions['select'] = [
+            'id',
+            'category',
+            'title',
+            'LEFT(message, 250) AS message',
+            'image',
+            'created_at',
+        ];
 
-        renderNews($postData, $filterValues, $postModel->getList($conditions, true), $user);
+        $repo = new \repository\NewsRepository($db);
+
+        renderNews($postData, $filterValues, $repo->findAll($conditions, [], true), $user);
         break;
 }
